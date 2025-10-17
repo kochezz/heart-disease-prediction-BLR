@@ -1,0 +1,15 @@
+BMI
+Sex
+AgeCategory
+Smoking
+AlcoholDrinking
+DiffWalking
+PhysicalActivity
+SleepTime
+PhysicalHealth
+MentalHealth
+Asthma
+KidneyDisease
+SkinCancer
+Stroke
+Diabetic
