@@ -1,0 +1,25 @@
+{
+    "best_model_name": "Random Forest",
+    "best_model_auc": 0.8269351473876163,
+    "best_model_accuracy": 0.915602182648259,
+    "training_date": "2025-10-19 19:33:14",
+    "features_used": [
+        "BMI",
+        "Sex",
+        "AgeCategory",
+        "Smoking",
+        "AlcoholDrinking",
+        "DiffWalking",
+        "PhysicalActivity",
+        "SleepTime",
+        "PhysicalHealth",
+        "MentalHealth",
+        "Asthma",
+        "KidneyDisease",
+        "SkinCancer",
+        "Stroke",
+        "Diabetic"
+    ],
+    "n_features": 15,
+    "optimal_threshold": 0.0782112241853805
+}
