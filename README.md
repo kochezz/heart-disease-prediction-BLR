@@ -95,16 +95,21 @@ CAPSTONE_PROJECT/
 
 ---
 
-## 🔁 Model Comparison
+## 📊 Model Performance Comparison
 
-| Model | Test Accuracy | Test AUC | Sensitivity | Precision | F1-Score | Overfit Score |
-|--------|----------------|-----------|--------------|------------|-----------|
-| **Random Forest** | **0.9156** | **0.8269** | 0.042 | **0.600** | 0.079 | 0.032 |
-| Logistic Regression | 0.7414 | 0.8266 | 0.765 | 0.215 | 0.336 | 0.0008 |
-| Naïve Bayes | 0.8458 | 0.7977 | 0.452 | 0.265 | 0.334 | 0.0026 |
-| SVM (Linear) | 0.3014 | 0.5589 | 0.771 | 0.088 | 0.159 | -0.002 |
+| Model | Train_Accuracy | Test_Accuracy | Train_AUC | Test_AUC | Test_Sensitivity | Test_Precision | Test_F1 | Train_Time_sec | Overfit_Score |
+|-------|----------------|---------------|-----------|----------|------------------|----------------|---------|----------------|---------------|
+| Random Forest | 0.922736 | 0.915682 | 0.859329 | 0.826935 | 0.042192 | 0.600000 | 0.078840 | 9.34 | 0.032394 |
+| Logistic Regression | 0.742132 | 0.741428 | 0.829478 | 0.826647 | 0.765114 | 0.215472 | 0.336250 | 0.32 | 0.002831 |
+| Naive Bayes | 0.846277 | 0.845886 | 0.800363 | 0.797700 | 0.452237 | 0.265267 | 0.334391 | 0.08 | 0.002664 |
+| SVM (Linear) | 0.301408 | 0.303929 | 0.556629 | 0.558903 | 0.771324 | 0.088922 | 0.159461 | 46.70 | -0.002274 |
 
 ---
+
+### 🏆 BEST MODEL: Random Forest
+- **Test AUC:** 0.8269
+- **Test Accuracy:** 0.9156
+- **Overfitting:** 0.0324
 
 ## 🏆 Final Model Selection: **Random Forest**
 
