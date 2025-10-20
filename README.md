@@ -1,4 +1,5 @@
-# ❤️ Heart Disease Prediction using Binary Logistic Regression (BLR)
+# HEALTH CARE ANLYTICS
+#### A study of the association between heart disease and various factors such as demographics, medical history and behavior.
 
 [![Built With Python](https://img.shields.io/badge/Built%20With-Python-blue?logo=python)](https://www.python.org/)
 [![Status](https://img.shields.io/badge/Status-Complete-brightgreen)]()
