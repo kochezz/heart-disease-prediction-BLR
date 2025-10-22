@@ -58,7 +58,7 @@ if mode == "Load a trained scikit‑learn model (.pkl)":
 
 # Threshold slider
 st.sidebar.subheader("🔧 Classification Threshold")
-threshold = st.sidebar.slider("Threshold (for classifying Positive)", min_value=0.05, max_value=0.95, value=0.50, step=0.01)
+threshold = st.sidebar.slider("Threshold (for classifying Positive)", min_value=0.05, max_value=0.95, value=0.08, step=0.01)
 st.sidebar.caption("Used for classification, sensitivity/specificity, and confusion matrix.")
 
 # Evaluation data uploader
@@ -69,10 +69,10 @@ eval_csv = st.sidebar.file_uploader("Upload CSV with features + 'HeartDisease' c
 # Feature Inputs
 # ------------------------------
 
-st.title(" Heart Disease Risk Predictor")
+st.title("❤️ Heart Disease Risk Predictor")
 st.caption(
-    "Binary classification using variables identified as most predictive in your analysis. "
-    "If a trained model is not provided, the app uses built‑in logistic regression coefficients from your statsmodels output (post‑VIF fix)."
+    """Binary classification using variables identified as most predictive in your analysis.
+If a trained model is not provided, the app uses built‑in logistic regression coefficients from your statsmodels output (post‑VIF fix)."""
 )
 
 col1, col2, col3 = st.columns(3)
@@ -228,7 +228,15 @@ st.markdown("---")
 st.header("Model Evaluation (ROC & Calibration)")
 st.caption("Upload a CSV with feature columns and a binary 'HeartDisease' column to compute ROC, AUC, calibration, and a confusion matrix at the selected threshold.")
 
+# Quick helper to compute Youden's J on the uploaded CSV and move the slider suggestion
+col_tools = st.columns([1,1,2])
+with col_tools[0]:
+    compute_best = st.button("📐 Suggest Best Threshold (Youden's J)")
+with col_tools[1]:
+    reset_default = st.button("↩️ Reset to Default (0.08)")
+
 if eval_csv is not None:
+    import io
     eval_df = pd.read_csv(eval_csv)
 
     missing = [c for c in feature_order + ["HeartDisease"] if c not in eval_df.columns]
@@ -271,8 +279,19 @@ if eval_csv is not None:
             backend_used = "Built‑in Logistic Regression (coefficients)"
 
         # Metrics
+        from sklearn.metrics import roc_curve, roc_auc_score, confusion_matrix, accuracy_score, precision_score, recall_score
+        from sklearn.calibration import calibration_curve
+        fpr, tpr, thr = roc_curve(y_true, proba_eval)
         auc_val = roc_auc_score(y_true, proba_eval)
-        fpr, tpr, _ = roc_curve(y_true, proba_eval)
+
+        # Optional: suggest best threshold
+        if compute_best:
+            youden_j = tpr - fpr
+            best_idx = int(np.argmax(youden_j))
+            best_thr = float(thr[best_idx])
+            st.success(f"Suggested threshold (Youden's J): {best_thr:.3f}")
+        if reset_default:
+            st.info("Default threshold is 0.08 (from master dataset).")
 
         # Threshold-based metrics
         y_pred = (proba_eval >= threshold).astype(int)
