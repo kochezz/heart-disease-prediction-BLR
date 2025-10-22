@@ -33,7 +33,7 @@ The final model achieved a **Test AUC of 0.8269** and **Accuracy of 91.56%**, wi
 
 ```
 CAPSTONE_PROJECT/
-├── dashboards/              # (Optional) Streamlit or visualization components
+├── dashboards/              # Streamlit or visualization components
 ├── data/                    # Raw and processed datasets
 ├── environment/             # Environment configuration (requirements)
 ├── models/                  # Trained models and metadata (.pkl, .json)
@@ -60,7 +60,7 @@ CAPSTONE_PROJECT/
 
 ---
 
-## 🧠 Model Development Summary
+##  Model Development Summary
 
 | Step | Description |
 |------|-------------|
@@ -112,7 +112,7 @@ CAPSTONE_PROJECT/
 - **Test Accuracy:** 0.9156
 - **Overfitting:** 0.0324
 
-## 🏆 Final Model Selection: **Random Forest**
+##  Final Model Selection: **Random Forest**
 
 **Rationale:**
 - Highest Test AUC (0.8269)
@@ -139,7 +139,7 @@ CAPSTONE_PROJECT/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### 🔧 Installation
 
