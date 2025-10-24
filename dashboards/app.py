@@ -3,9 +3,11 @@ import numpy as np
 import pandas as pd
 import pickle
 from pathlib import Path
-from PIL import Image
 from typing import Optional, Tuple
 import io
+from PIL import Image
+import smtplib, ssl
+from email.message import EmailMessage
 
 # Plots
 import matplotlib.pyplot as plt
@@ -15,35 +17,41 @@ from sklearn.metrics import (
 )
 from sklearn.calibration import calibration_curve
 
-from pathlib import Path
-from PIL import Image
-import streamlit as st
-
-# Resolve the path to the heart icon image (works locally & in Streamlit Cloud)
+# ----------------------------------
+# Page config + icon path (robust)
+# ----------------------------------
 APP_DIR = Path(__file__).resolve().parent
-ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  # ../images/heart-rate.png
+ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  # expects ../images/heart-rate.png relative to this file
 
-# Set Streamlit page configuration
 st.set_page_config(
     page_title="Heart Disease Risk Predictor",
-    page_icon=str(ICON_PATH),
+    page_icon=str(ICON_PATH),  # favicon
     layout="wide"
 )
 
-# ---- Header with custom image beside the title ----
-icon = Image.open(ICON_PATH)
-col1, col2 = st.columns([0.1, 3])
-with col1:
-    st.image(icon, width=60)
-with col2:
-    st.title("Heart Disease Risk Predictor")
+# ----------------------------------
+# Branded header (image + title)
+# ----------------------------------
+try:
+    icon_img = Image.open(ICON_PATH)
+    col1, col2 = st.columns([0.18, 3])
+    with col1:
+        st.image(icon_img, width=110)  # adjust size as you like (e.g., 96–128)
+    with col2:
+        st.title("Heart Disease Risk Predictor")
+except Exception as e:
+    # Graceful fallback if icon can't be loaded
+    st.title("🫀 Heart Disease Risk Predictor")
+    st.caption("Note: custom icon could not be loaded. Error: {}".format(e))
 
-
+st.caption(
+    """Binary classification using variables identified as most predictive in your analysis.
+If a trained model is not provided, the app uses built‑in logistic regression coefficients from your statsmodels output (post‑VIF fix)."""
+)
 
 # ------------------------------
 # Utility
 # ------------------------------
-
 def sigmoid(z: float) -> float:
     return 1.0 / (1.0 + np.exp(-z))
 
@@ -92,20 +100,6 @@ eval_csv = st.sidebar.file_uploader("Upload CSV with features + 'HeartDisease' c
 # ------------------------------
 # Feature Inputs
 # ------------------------------
-
-# Load the icon image
-icon = Image.open("heart-rate.png")
-
-# Display title and image side by side
-col1, col2 = st.columns([0.1, 3])
-with col1:
-    st.image(icon, width=60)
-with col2:
-    st.title("Heart Disease Risk Predictor")
-st.caption(
-    """Binary classification using variables identified as most predictive in your analysis.
-If a trained model is not provided, the app uses built‑in logistic regression coefficients from your statsmodels output (post‑VIF fix)."""
-)
 
 col1, col2, col3 = st.columns(3)
 
@@ -347,7 +341,7 @@ if eval_csv is not None:
         ax1.plot([0, 1], [0, 1], linestyle='--')
         ax1.set_xlabel('False Positive Rate')
         ax1.set_ylabel('True Positive Rate')
-        ax1.set_title(f'ROC Curve ({backend_used})\nAUC = {auc_val:.3f}')
+        ax1.set_title(f'ROC Curve ({backend_used})\\nAUC = {auc_val:.3f}')
         st.pyplot(fig1)
 
         # Calibration Plot
@@ -387,11 +381,14 @@ st.markdown(
     • Use the threshold slider (left sidebar) to tune sensitivity vs. specificity. Consider optimizing via Youden's J on your validation data.
     """
 )
+
 # Disclaimer section
 st.markdown("#### ⚠️ Disclaimer")
 st.markdown("*This application is intended for educational purposes only. It does not offer medical advice, diagnosis or treatment.*")
 
-# Contact section
+# ------------------------------
+# Contact section (Gmail SMTP)
+# ------------------------------
 st.markdown("---")
 st.markdown("### 📬 Contact Us")
 with st.form("contact_form"):
@@ -399,8 +396,43 @@ with st.form("contact_form"):
     email = st.text_input("Your Email")
     message = st.text_area("Your Message")
     contact_submit = st.form_submit_button("Send Message")
+
     if contact_submit:
-        st.success("Thank you! Your message has been received.")
+        if not name or not email or not message:
+            st.error("⚠️ Please fill in your name, email, and message.")
+        else:
+            try:
+                EMAIL_USER = st.secrets["EMAIL_USER"]     # your Gmail address
+                EMAIL_PASS = st.secrets["EMAIL_PASS"]     # Gmail App Password
+                EMAIL_TO   = st.secrets.get("EMAIL_TO", EMAIL_USER)
+
+                msg = EmailMessage()
+                msg["Subject"] = f"Heart App Contact Message from {name}"
+                msg["From"] = EMAIL_USER
+                msg["To"] = EMAIL_TO
+                msg["Reply-To"] = email
+                msg.set_content(
+                    f"""
+New message from your Heart Disease Risk Predictor app
+
+Name: {name}
+Email: {email}
+
+Message:
+{message}
+                    """
+                )
+
+                context = ssl.create_default_context()
+                with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+                    server.login(EMAIL_USER, EMAIL_PASS)
+                    server.send_message(msg)
+
+                st.success("✅ Thank you! Your message has been sent successfully.")
+            except KeyError as e:
+                st.error(f"Missing email secret: {e}. Please add EMAIL_USER and EMAIL_PASS in Streamlit secrets.")
+            except Exception as e:
+                st.error(f"❌ Failed to send message: {e}")
 
 st.markdown("---")
 st.markdown("© 2025 William C. Phiri – Powered by BEDA | Email: wphiri@beda.ie")
