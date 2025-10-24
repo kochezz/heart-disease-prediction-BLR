@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import pickle
 from pathlib import Path
+from PIL import Image
 from typing import Optional, Tuple
 import io
 
@@ -14,7 +15,12 @@ from sklearn.metrics import (
 )
 from sklearn.calibration import calibration_curve
 
-st.set_page_config(page_title="Heart Disease Risk Predictor", page_icon="🫀", layout="wide")
+st.set_page_config(
+    page_title="Heart Disease Risk Predictor",
+    page_icon="images/heart-rate.png",
+    layout="wide"
+)
+
 
 # ------------------------------
 # Utility
@@ -69,7 +75,15 @@ eval_csv = st.sidebar.file_uploader("Upload CSV with features + 'HeartDisease' c
 # Feature Inputs
 # ------------------------------
 
-st.title("🫀 Heart Disease Risk Predictor")
+# Load the icon image
+icon = Image.open("heart-rate.png")
+
+# Display title and image side by side
+col1, col2 = st.columns([0.1, 3])
+with col1:
+    st.image(icon, width=60)
+with col2:
+    st.title("Heart Disease Risk Predictor")
 st.caption(
     """Binary classification using variables identified as most predictive in your analysis.
 If a trained model is not provided, the app uses built‑in logistic regression coefficients from your statsmodels output (post‑VIF fix)."""
