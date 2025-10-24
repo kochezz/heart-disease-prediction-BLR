@@ -14,7 +14,7 @@ from sklearn.metrics import (
 )
 from sklearn.calibration import calibration_curve
 
-st.set_page_config(page_title="Heart Disease Risk Predictor", page_icon="❤️", layout="wide")
+st.set_page_config(page_title="Heart Disease Risk Predictor", page_icon="🫀", layout="wide")
 
 # ------------------------------
 # Utility
@@ -69,7 +69,7 @@ eval_csv = st.sidebar.file_uploader("Upload CSV with features + 'HeartDisease' c
 # Feature Inputs
 # ------------------------------
 
-st.title("❤️ Heart Disease Risk Predictor")
+st.title("🫀 Heart Disease Risk Predictor")
 st.caption(
     """Binary classification using variables identified as most predictive in your analysis.
 If a trained model is not provided, the app uses built‑in logistic regression coefficients from your statsmodels output (post‑VIF fix)."""
@@ -355,3 +355,20 @@ st.markdown(
     • Use the threshold slider (left sidebar) to tune sensitivity vs. specificity. Consider optimizing via Youden's J on your validation data.
     """
 )
+# Disclaimer section
+st.markdown("#### ⚠️ Disclaimer")
+st.markdown("*This application is intended for educational purposes only. It does not offer medical advice, diagnosis or treatment.*")
+
+# Contact section
+st.markdown("---")
+st.markdown("### 📬 Contact Us")
+with st.form("contact_form"):
+    name = st.text_input("Your Name")
+    email = st.text_input("Your Email")
+    message = st.text_area("Your Message")
+    contact_submit = st.form_submit_button("Send Message")
+    if contact_submit:
+        st.success("Thank you! Your message has been received.")
+
+st.markdown("---")
+st.markdown("© 2025 William C. Phiri – Powered by BEDA | Email: wphiri@beda.ie")
