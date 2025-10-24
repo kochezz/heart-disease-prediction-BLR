@@ -15,11 +15,29 @@ from sklearn.metrics import (
 )
 from sklearn.calibration import calibration_curve
 
+from pathlib import Path
+from PIL import Image
+import streamlit as st
+
+# Resolve the path to the heart icon image (works locally & in Streamlit Cloud)
+APP_DIR = Path(__file__).resolve().parent
+ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  # ../images/heart-rate.png
+
+# Set Streamlit page configuration
 st.set_page_config(
     page_title="Heart Disease Risk Predictor",
-    page_icon="images/heart-rate.png",
+    page_icon=str(ICON_PATH),
     layout="wide"
 )
+
+# ---- Header with custom image beside the title ----
+icon = Image.open(ICON_PATH)
+col1, col2 = st.columns([0.1, 3])
+with col1:
+    st.image(icon, width=60)
+with col2:
+    st.title("Heart Disease Risk Predictor")
+
 
 
 # ------------------------------
