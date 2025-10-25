@@ -21,8 +21,7 @@ from sklearn.calibration import calibration_curve
 # Page config + icon path (robust)
 # ----------------------------------
 APP_DIR = Path(__file__).resolve().parent
-ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  # expects ../images/heart-rate.png relative to this file
-
+ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  
 st.set_page_config(
     page_title="Heart Disease Risk Predictor",
     page_icon=str(ICON_PATH),  # favicon
@@ -36,7 +35,7 @@ try:
     icon_img = Image.open(ICON_PATH)
     col1, col2 = st.columns([0.18, 3])
     with col1:
-        st.image(icon_img, width=110)  # adjust size as you like (e.g., 96–128)
+        st.image(icon_img, width=120) 
     with col2:
         st.title("Heart Disease Risk Predictor")
 except Exception as e:
@@ -389,6 +388,7 @@ st.markdown("*This application is intended for educational purposes only. It doe
 # ------------------------------
 # Contact section (Gmail SMTP)
 # ------------------------------
+# Contact section
 st.markdown("---")
 st.markdown("### 📬 Contact Us")
 with st.form("contact_form"):
@@ -396,43 +396,8 @@ with st.form("contact_form"):
     email = st.text_input("Your Email")
     message = st.text_area("Your Message")
     contact_submit = st.form_submit_button("Send Message")
-
     if contact_submit:
-        if not name or not email or not message:
-            st.error("⚠️ Please fill in your name, email, and message.")
-        else:
-            try:
-                EMAIL_USER = st.secrets["EMAIL_USER"]     # your Gmail address
-                EMAIL_PASS = st.secrets["EMAIL_PASS"]     # Gmail App Password
-                EMAIL_TO   = st.secrets.get("EMAIL_TO", EMAIL_USER)
-
-                msg = EmailMessage()
-                msg["Subject"] = f"Heart App Contact Message from {name}"
-                msg["From"] = EMAIL_USER
-                msg["To"] = EMAIL_TO
-                msg["Reply-To"] = email
-                msg.set_content(
-                    f"""
-New message from your Heart Disease Risk Predictor app
-
-Name: {name}
-Email: {email}
-
-Message:
-{message}
-                    """
-                )
-
-                context = ssl.create_default_context()
-                with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-                    server.login(EMAIL_USER, EMAIL_PASS)
-                    server.send_message(msg)
-
-                st.success("✅ Thank you! Your message has been sent successfully.")
-            except KeyError as e:
-                st.error(f"Missing email secret: {e}. Please add EMAIL_USER and EMAIL_PASS in Streamlit secrets.")
-            except Exception as e:
-                st.error(f"❌ Failed to send message: {e}")
+        st.success("Thank you! Your message has been received.")
 
 st.markdown("---")
 st.markdown("© 2025 William C. Phiri – Powered by BEDA | Email: wphiri@beda.ie")
