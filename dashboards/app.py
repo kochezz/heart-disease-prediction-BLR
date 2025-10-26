@@ -18,33 +18,15 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
 # ----------------------------------
-# Header (centered, single source of truth)
+# Page config + icon path (robust)
 # ----------------------------------
 APP_DIR = Path(__file__).resolve().parent
-ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"
-
-left, mid, right = st.columns([1, 6, 1])   # center the whole header block
-with mid:
-    if ICON_PATH.exists():
-        icon_img = Image.open(ICON_PATH)
-        col_icon, col_title = st.columns([1, 9], vertical_alignment="center")
-        with col_icon:
-            st.image(icon_img, width=100)
-        with col_title:
-            st.markdown(
-                "<h1 style='margin:0; white-space:nowrap;'>"
-                "Heart Disease Predictor & Model Evaluation"
-                "</h1>",
-                unsafe_allow_html=True
-            )
-    else:
-        st.markdown(
-            "<h1 style='text-align:center; margin:0;'>"
-            "Heart Disease Predictor & Model Evaluation"
-            "</h1>",
-            unsafe_allow_html=True
-        )
-
+ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  
+st.set_page_config(
+    page_title="Heart Disease Risk Predictor",
+    page_icon=str(ICON_PATH),  # favicon
+    layout="wide"
+)
 
 
 
