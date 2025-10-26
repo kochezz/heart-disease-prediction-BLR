@@ -17,27 +17,63 @@ from sklearn.calibration import calibration_curve
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
-# ----------------------------------
+
+# -----------------------------
 # Page config (must be first)
-# ----------------------------------
+# -----------------------------
 APP_DIR = Path(__file__).resolve().parent
-ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  
+ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"
+
 st.set_page_config(
     page_title="Heart Disease Risk Predictor & Model Evaluation",
-    page_icon=str(ICON_PATH),
-    layout="wide"
+    page_icon=str(ICON_PATH),  # favicon (tab icon only)
+    layout="wide",
 )
 
+# -----------------------------
 # Load icon image before using it
+# -----------------------------
 icon_img = None
 if ICON_PATH.exists():
     icon_img = Image.open(ICON_PATH)
 
-# Create columns for header layout
-col_icon, col_title = st.columns([0.10, 0.90])
-with col_icon:
-    if icon_img is not None:
-        st.image(icon_img, width=100)
+# -----------------------------
+# CSS for centered header layout
+# -----------------------------
+st.markdown(
+    """
+    <style>
+    .header-container {
+        display: flex;
+        justify-content: center;      /* centers horizontally */
+        align-items: center;          /* aligns vertically */
+        margin-top: 20px;
+        margin-bottom: 30px;
+        gap: 20px;                    /* spacing between icon and title */
+    }
+    .header-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# -----------------------------
+# Create centered header block
+# -----------------------------
+if icon_img is not None:
+    st.markdown(
+        f"""
+        <div class="header-container">
+            <img src="data:image/png;base64,{st.image(icon_img, width=100, output_format='PNG', use_column_width=False)._repr_png_().decode()}" width="100">
+            <div class="header-title">Heart Disease Predictor & Model Evaluation</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 
 
 
