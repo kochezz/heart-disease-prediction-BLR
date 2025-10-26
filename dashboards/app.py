@@ -22,11 +22,30 @@ from sklearn.model_selection import StratifiedKFold, cross_val_predict
 # ----------------------------------
 APP_DIR = Path(__file__).resolve().parent
 ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  
-st.set_page_config(
-    page_title="Heart Disease Risk Predictor & Model Evaluation",
-    page_icon=str(ICON_PATH),  # favicon
-    layout="wide"
-)
+try:
+    if ICON_PATH.exists():
+        icon_img = Image.open(ICON_PATH)
+        
+        # Create columns: icon (8%) and title (92%)
+        col_icon, col_title = st.columns([0.08, 0.92])
+        
+        with col_icon:
+            st.image(icon_img, width=90)  # ← Adjust size here (60-150)
+        
+        with col_title:
+            # Add top margin for vertical alignment
+            st.markdown("""
+                <h1 style='margin-top: 15px;'>
+                     Heart Disease Predictor & Model Evaluation
+                </h1>
+            """, unsafe_allow_html=True)
+    else:
+        st.title(" Heart Disease Predictor & Model Evaluation")
+        
+except Exception as e:
+    st.title(" Heart Disease Predictor & Model Evaluation")
+
+# Add subtitle
 
 
 # ----------------------------------
