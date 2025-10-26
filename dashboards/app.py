@@ -18,38 +18,32 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
 # ----------------------------------
-# Header (centered)
+# Header (centered, single source of truth)
 # ----------------------------------
 APP_DIR = Path(__file__).resolve().parent
 ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"
 
-left_spacer, center_col, right_spacer = st.columns([1, 2, 1])
-
-with center_col:
-    try:
-        if ICON_PATH.exists():
-            icon_img = Image.open(ICON_PATH)
-            # Row: big icon + title
-            col_icon, col_title = st.columns([1, 4])
-            with col_icon:
-                st.image(icon_img, width=110, use_container_width=False)
-            with col_title:
-                st.markdown(
-                    "<h1 style='margin:0; padding-top:10px;'>"
-                    "Heart Disease Predictor & Model Evaluation"
-                    "</h1>",
-                    unsafe_allow_html=True
-                )
-        else:
-            # Fallback: centered title without icon
+left, mid, right = st.columns([1, 6, 1])   # center the whole header block
+with mid:
+    if ICON_PATH.exists():
+        icon_img = Image.open(ICON_PATH)
+        col_icon, col_title = st.columns([1, 9], vertical_alignment="center")
+        with col_icon:
+            st.image(icon_img, width=100)
+        with col_title:
             st.markdown(
-                "<h1 style='text-align:center; margin:0;'>"
+                "<h1 style='margin:0; white-space:nowrap;'>"
                 "Heart Disease Predictor & Model Evaluation"
                 "</h1>",
                 unsafe_allow_html=True
             )
-    except Exception:
-        st.title("Heart Disease Predictor & Model Evaluation")
+    else:
+        st.markdown(
+            "<h1 style='text-align:center; margin:0;'>"
+            "Heart Disease Predictor & Model Evaluation"
+            "</h1>",
+            unsafe_allow_html=True
+        )
 
 
 
