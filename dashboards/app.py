@@ -27,10 +27,10 @@ try:
         icon_img = Image.open(ICON_PATH)
         
         # Create columns: icon (8%) and title (92%)
-        col_icon, col_title = st.columns([0.08, 0.92])
+        col_icon, col_title = st.columns([0.10, 0.90])
         
         with col_icon:
-            st.image(icon_img, width=90)  # ← Adjust size here (60-150)
+            st.image(icon_img, width=100)  
         
         with col_title:
             # Add top margin for vertical alignment
