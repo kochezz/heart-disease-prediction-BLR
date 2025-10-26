@@ -24,9 +24,21 @@ APP_DIR = Path(__file__).resolve().parent
 ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  
 st.set_page_config(
     page_title="Heart Disease Risk Predictor & Model Evaluation",
-    page_icon=str(ICON_PATH),  # favicon
+    page_icon=str(ICON_PATH),
     layout="wide"
 )
+
+# Load icon image before using it
+icon_img = None
+if ICON_PATH.exists():
+    icon_img = Image.open(ICON_PATH)
+
+# Create columns for header layout
+col_icon, col_title = st.columns([0.10, 0.90])
+with col_icon:
+    if icon_img is not None:
+        st.image(icon_img, width=100)
+
 
 
 # ----------------------------------
