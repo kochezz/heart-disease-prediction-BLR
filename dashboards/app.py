@@ -20,11 +20,14 @@ from sklearn.model_selection import StratifiedKFold, cross_val_predict
 # ----------------------------------
 # Page config (must be first)
 # ----------------------------------
+APP_DIR = Path(__file__).resolve().parent
+ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"  
 st.set_page_config(
-    page_title="Heart Disease Predictor & Model Evaluation",
-    page_icon="❤️",
+    page_title="Heart Disease Risk Predictor & Model Evaluation",
+    page_icon=str(ICON_PATH),  # favicon
     layout="wide"
 )
+
 
 # ----------------------------------
 # Constants
@@ -194,13 +197,13 @@ try:
         icon_img = Image.open(ICON_PATH)
         col1, col2 = st.columns([0.15, 3])
         with col1:
-            st.image(icon_img, width=100)
+            st.image(icon_img, width=125)
         with col2:
-            st.title("🫀 Heart Disease Predictor & Model Evaluation")
+            st.title("Heart Disease Predictor & Model Evaluation")
     else:
-        st.title("🫀 Heart Disease Predictor & Model Evaluation")
+        st.title("Heart Disease Predictor & Model Evaluation")
 except Exception:
-    st.title("🫀 Heart Disease Predictor & Model Evaluation")
+    st.title("Heart Disease Predictor & Model Evaluation")
 
 st.markdown("""
 <div style='background-color: #1e3a5f; padding: 15px; border-radius: 10px; margin-bottom: 20px;'>

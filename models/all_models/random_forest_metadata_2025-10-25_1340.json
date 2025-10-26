@@ -1,0 +1,26 @@
+{
+  "model_name": "Random Forest",
+  "model_type": "RandomForestClassifier",
+  "saved_date": "2025-10-25_1340",
+  "test_auc": 0.8269351473876163,
+  "test_accuracy": 0.915602182648259,
+  "preprocessing": "None",
+  "features": [
+    "BMI",
+    "Sex",
+    "AgeCategory",
+    "Smoking",
+    "AlcoholDrinking",
+    "DiffWalking",
+    "PhysicalActivity",
+    "SleepTime",
+    "PhysicalHealth",
+    "MentalHealth",
+    "Asthma",
+    "KidneyDisease",
+    "SkinCancer",
+    "Stroke",
+    "Diabetic"
+  ],
+  "file_structure": "model_only"
+}
