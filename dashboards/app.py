@@ -765,7 +765,7 @@ with tab3:
     st.header("ℹ️ Help & Documentation")
     
     st.markdown("""
-    ## 🎯 Understanding the Two Main Functions
+    ##  Understanding the Two Main Functions
     
     ### 1. 🔮 Single Case Prediction
     **Purpose:** Predict heart disease risk for ONE individual patient
@@ -833,7 +833,7 @@ with tab3:
     
     **Youden's J:** Finds the threshold that maximizes (Sensitivity + Specificity - 1)
     - Balances true positive and true negative rates
-    - Your model found optimal threshold ≈ 0.078 during training
+    - Our built-in model found optimal threshold ≈ 0.078 during training
     
     ---
     
@@ -849,7 +849,7 @@ with tab3:
     
     ---
     
-    ## 🐛 Troubleshooting
+    ##  Troubleshooting
     
     ### "Poor AUC with my uploaded model"
     **Likely causes:**
@@ -874,7 +874,7 @@ with tab3:
     
     ---
     
-    ## 📚 Feature Descriptions
+    ##  Feature Descriptions
     
     | Feature | Type | Description |
     |---------|------|-------------|
