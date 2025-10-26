@@ -17,62 +17,39 @@ from sklearn.calibration import calibration_curve
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
-
-# -----------------------------
-# Page config (must be first)
-# -----------------------------
+# ----------------------------------
+# Header (centered)
+# ----------------------------------
 APP_DIR = Path(__file__).resolve().parent
 ICON_PATH = APP_DIR.parent / "images" / "heart-rate.png"
 
-st.set_page_config(
-    page_title="Heart Disease Risk Predictor & Model Evaluation",
-    page_icon=str(ICON_PATH),  # favicon (tab icon only)
-    layout="wide",
-)
+left_spacer, center_col, right_spacer = st.columns([1, 2, 1])
 
-# -----------------------------
-# Load icon image before using it
-# -----------------------------
-icon_img = None
-if ICON_PATH.exists():
-    icon_img = Image.open(ICON_PATH)
-
-# -----------------------------
-# CSS for centered header layout
-# -----------------------------
-st.markdown(
-    """
-    <style>
-    .header-container {
-        display: flex;
-        justify-content: center;      /* centers horizontally */
-        align-items: center;          /* aligns vertically */
-        margin-top: 20px;
-        margin-bottom: 30px;
-        gap: 20px;                    /* spacing between icon and title */
-    }
-    .header-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# -----------------------------
-# Create centered header block
-# -----------------------------
-if icon_img is not None:
-    st.markdown(
-        f"""
-        <div class="header-container">
-            <img src="data:image/png;base64,{st.image(icon_img, width=100, output_format='PNG', use_column_width=False)._repr_png_().decode()}" width="100">
-            <div class="header-title">Heart Disease Predictor & Model Evaluation</div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+with center_col:
+    try:
+        if ICON_PATH.exists():
+            icon_img = Image.open(ICON_PATH)
+            # Row: big icon + title
+            col_icon, col_title = st.columns([1, 4])
+            with col_icon:
+                st.image(icon_img, width=110, use_container_width=False)
+            with col_title:
+                st.markdown(
+                    "<h1 style='margin:0; padding-top:10px;'>"
+                    "Heart Disease Predictor & Model Evaluation"
+                    "</h1>",
+                    unsafe_allow_html=True
+                )
+        else:
+            # Fallback: centered title without icon
+            st.markdown(
+                "<h1 style='text-align:center; margin:0;'>"
+                "Heart Disease Predictor & Model Evaluation"
+                "</h1>",
+                unsafe_allow_html=True
+            )
+    except Exception:
+        st.title("Heart Disease Predictor & Model Evaluation")
 
 
 
