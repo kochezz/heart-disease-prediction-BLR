@@ -1,0 +1,26 @@
+{
+  "model_name": "Naive Bayes",
+  "model_type": "GaussianNB",
+  "saved_date": "2025-11-15_1359",
+  "test_auc": 0.797699568300927,
+  "test_accuracy": 0.8458856454916431,
+  "preprocessing": "None",
+  "features": [
+    "BMI",
+    "Sex",
+    "AgeCategory",
+    "Smoking",
+    "AlcoholDrinking",
+    "DiffWalking",
+    "PhysicalActivity",
+    "SleepTime",
+    "PhysicalHealth",
+    "MentalHealth",
+    "Asthma",
+    "KidneyDisease",
+    "SkinCancer",
+    "Stroke",
+    "Diabetic"
+  ],
+  "file_structure": "model_only"
+}

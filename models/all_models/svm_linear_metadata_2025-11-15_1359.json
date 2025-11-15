@@ -1,0 +1,26 @@
+{
+  "model_name": "SVM (Linear)",
+  "model_type": "Pipeline",
+  "saved_date": "2025-11-15_1359",
+  "test_auc": 0.558902548064506,
+  "test_accuracy": 0.30392907956659737,
+  "preprocessing": "StandardScaler (in pipeline)",
+  "features": [
+    "BMI",
+    "Sex",
+    "AgeCategory",
+    "Smoking",
+    "AlcoholDrinking",
+    "DiffWalking",
+    "PhysicalActivity",
+    "SleepTime",
+    "PhysicalHealth",
+    "MentalHealth",
+    "Asthma",
+    "KidneyDisease",
+    "SkinCancer",
+    "Stroke",
+    "Diabetic"
+  ],
+  "file_structure": "pipeline"
+}

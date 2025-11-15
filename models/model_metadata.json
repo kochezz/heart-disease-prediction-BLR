@@ -2,7 +2,7 @@
     "best_model_name": "Random Forest",
     "best_model_auc": 0.8269351473876163,
     "best_model_accuracy": 0.915602182648259,
-    "training_date": "2025-10-25 13:40:31",
+    "training_date": "2025-11-15 13:59:53",
     "features_used": [
         "BMI",
         "Sex",
